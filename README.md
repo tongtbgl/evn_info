@@ -10,7 +10,7 @@ Viết lại bằng Python thuần (không thư viện ngoài) để thay add-on
 
 ## Cài đặt
 1. Home Assistant → Cài đặt → Add-on → Cửa hàng add-on → ⋮ → Kho lưu trữ → thêm
-   `https://github.com/GITHUB_USER/evninfo-addon`
+   `https://github.com/tongtbgl/evn_info`
 2. Cài **EVN INFO**, vào tab Cấu hình, nhập tài khoản / mật khẩu CSKH EVNCPC, rồi Khởi động.
 3. Mở mục **EVN** trên thanh bên (add-on tự bật ở lần chạy đầu): biểu đồ theo tháng, chi tiết kỳ, thống kê, so với năm trước. Nút "Trạng thái · cập nhật" để xem lỗi / cập nhật ngay / lịch cắt điện.
 

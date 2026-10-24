@@ -4,7 +4,7 @@ name: EVN INFO
 version: "1.2.1"
 slug: evninfo
 description: Sản lượng / hóa đơn / tiền nợ / lịch cắt điện từ CSKH EVN miền Trung – lưu lịch sử, tạo sensor
-url: "https://github.com/GITHUB_USER/evninfo-addon"
+url: "https://github.com/tongtbgl/evn_info"
 arch:
   - amd64
   - aarch64
