@@ -1,0 +1,15 @@
+configuration:
+  username:
+    name: Tài khoản CSKH
+    description: Số điện thoại / tên đăng nhập CSKH EVN miền Trung (cskh.cpc.vn).
+  password:
+    name: Mật khẩu
+  interval_minutes:
+    name: Chu kỳ cập nhật (phút)
+  bill_years:
+    name: Số năm hóa đơn lấy lần đầu
+  import_evnvn:
+    name: Nhập lịch sử từ add-on EVN VN cũ
+    description: Lần đầu đọc /config/evnvn/evndata.db nếu có.
+  sensors:
+    name: Tạo sensor trong Home Assistant

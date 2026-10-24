@@ -1,0 +1,15 @@
+configuration:
+  username:
+    name: Account
+    description: EVN Central (EVNCPC, cskh.cpc.vn) customer-portal login.
+  password:
+    name: Password
+  interval_minutes:
+    name: Update interval (minutes)
+  bill_years:
+    name: Years of bills on first run
+  import_evnvn:
+    name: Import history from the old EVN VN add-on
+    description: Reads /config/evnvn/evndata.db once, if present.
+  sensors:
+    name: Create Home Assistant sensors
