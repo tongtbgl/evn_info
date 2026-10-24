@@ -2,6 +2,9 @@
 
 Lấy dữ liệu điện từ CSKH EVN miền Trung (cskh-api.cpc.vn) cho mọi mã khách hàng của một tài khoản CSKH.
 
+## Tài khoản đăng nhập
+Dùng tài khoản CSKH EVN miền Trung – tài khoản đăng nhập trang `cskh.cpc.vn` / app CSKH EVNCPC. Tên đăng nhập thường là số điện thoại đã đăng ký với điện lực hoặc mã khách hàng (`PC…` trên hóa đơn). Nên đăng nhập thử trên trang đó trước: thấy mã khách hàng và hóa đơn là add-on lấy được. Chưa có tài khoản / quên mật khẩu: đăng ký hoặc lấy lại trên trang / app đó, hoặc gọi tổng đài CSKH EVNCPC 1900 1909.
+
 ## Cấu hình
 - `username`, `password`: tài khoản CSKH EVNCPC (đăng nhập cskh.cpc.vn / app CSKH EVNCPC).
 - `interval_minutes`: chu kỳ cập nhật (mặc định 180).
