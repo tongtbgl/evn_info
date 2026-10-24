@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+- Tự bật mục EVN trên thanh bên ở lần chạy đầu.
+
+## 1.2.0
+- Trang chính kiểu "Điện EVN": biểu đồ theo tháng, chi tiết kỳ, thống kê, so với năm trước; trang trạng thái riêng.
+
 ## 1.1.0
 - Đổi tên EVN CPC → EVN INFO (slug `evninfo`, CSDL `/data/evninfo.db`).
 

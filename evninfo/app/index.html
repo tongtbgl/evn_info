@@ -1,52 +1,33 @@
 <!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EVN INFO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f6fa;--card:#fff;--ink:#1b2430;--mut:#6b7686;--line:#e6e9ef;--acc:#1e6fd9;--bad:#c0392b;--ok:#1f8f4e}
-@media (prefers-color-scheme:dark){:root{--bg:#111418;--card:#1b1f25;--ink:#e8ecf1;--mut:#97a1ae;--line:#2a3039;--acc:#5aa0ff;--bad:#ff6b5b;--ok:#4cc27a}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-main{max-width:1100px;margin:0 auto;padding:18px 16px 40px}h1{font-size:1.4rem;margin:0}h2{font-size:1rem;margin:0 0 10px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.mut{color:var(--mut)}
-button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--acc);border-radius:9px;padding:6px 14px;cursor:pointer}
-.acc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
-.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0 16px}
-.kp div{background:var(--bg);border-radius:10px;padding:10px 12px}.kp b{display:block;font-size:1.2rem}.kp span{font-size:.78rem;color:var(--mut)}
-.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-table{width:100%;border-collapse:collapse;font-size:.88rem}td,th{padding:5px 6px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
-td:first-child,th:first-child{text-align:left}th{font-weight:600;color:var(--mut);font-size:.78rem}
-.err{color:var(--bad)}.ok{color:var(--ok)}.wrap{white-space:normal;text-align:left}
+html,body{margin:0;height:100%;background:#0b0f17}
+@media (prefers-color-scheme:light){html,body{background:#f4f6fa}}
+body.light{background:#f4f6fa}
+evninfo-page{display:block;height:100dvh;--hp-h:100dvh}
+.st{position:fixed;right:14px;bottom:14px;z-index:5;font:500 13px/1 "Be Vietnam Pro",system-ui,sans-serif;padding:8px 13px;border-radius:999px;
+  text-decoration:none;color:#38c6f4;background:rgba(20,27,40,.9);border:1px solid #243046;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+body.light .st{color:#1e6fd9;background:rgba(255,255,255,.95);border-color:#e6e9ef}
 </style></head>
-<body><main>
-<div class="top"><div><h1>EVN INFO</h1><div class="mut" id="st">Đang tải…</div></div><button id="rf">Cập nhật ngay</button></div>
-<div id="list"></div>
-</main>
-<script>
-const $ = (s) => document.querySelector(s);
-const n = (v, d = 0) => v == null || v === '' ? '–' : Number(v).toLocaleString('vi-VN', { maximumFractionDigits: d });
-const dt = (s) => { const [d, t] = String(s).split('T'); return `${t.slice(0, 5)} ${d.split('-').reverse().join('/')}`; };
-const today = new Date().toLocaleDateString('sv');
-const e = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-async function load() {
-  const d = await (await fetch('summary.json', { cache: 'no-store' })).json(), s = d.state;
-  $('#st').innerHTML = (s.running ? 'Đang cập nhật… · ' : '') + (s.last_ok ? `Cập nhật lúc ${e(dt(s.last_ok))}` : 'Chưa cập nhật')
-    + (s.next ? ` · lần tới ${e(s.next.slice(11, 16))}` : '') + (s.last_err ? `<br><span class="err">Lỗi: ${e(s.last_err)}</span>` : '');
-  $('#list').innerHTML = d.accounts.map((a) => {
-    const i = a.info;
-    return `<section class="acc"><h2>${e(a.code)} · ${e(a.name)} <span class="mut">${e(a.station || '')}</span></h2>
-      <div class="kp"><div><span>Chỉ số công tơ</span><b>${n(i.chi_so, 2)}</b><span>${e(i.thoi_diem || '')}</span></div>
-        <div><span>Hôm qua</span><b>${n(i.hom_qua, 2)} kWh</b></div><div><span>Tháng này</span><b>${n(i.thang_nay, 2)} kWh</b></div>
-        <div><span>${e(i.ky_hoa_don || 'Hóa đơn')}</span><b>${n(i.tien_hoa_don)} đ</b><span class="${i.tinh_trang === 'Đã thanh toán' ? 'ok' : 'err'}">${e(i.tinh_trang || '')}</span></div>
-        <div><span>Lịch sử lưu</span><b>${a.count.daily} ngày</b><span>${a.count.bills} kỳ hóa đơn</span></div></div>
-      <div class="cols"><div><h2>14 ngày gần nhất</h2><table><tr><th>Ngày</th><th>kWh</th><th>Chỉ số</th></tr>
-        ${a.days.map((x) => `<tr><td>${e(x.day.split('-').reverse().join('/'))}</td><td>${x.day === today ? '<span class="mut">chưa chốt</span>' : n(x.kwh, 2)}</td><td>${n(x.reading, 2)}</td></tr>`).join('')}</table></div>
-        <div><h2>Hóa đơn theo tháng</h2><table><tr><th>Tháng</th><th>kWh</th><th>Tiền (đ)</th></tr>
-        ${a.bills.map((x) => `<tr><td>${x.month}/${x.year}</td><td>${n(x.kwh)}</td><td>${n(x.total)}</td></tr>`).join('')}</table></div></div>
-      <h2 style="margin-top:16px">Lịch cắt điện (trạm của khách hàng)</h2>
-      ${a.outages.length ? `<table><tr><th>Từ</th><th>Đến</th><th class="wrap">Lý do</th></tr>${a.outages.map((o) => `<tr><td>${e(o.start.replace('T', ' '))}</td><td>${e(o.end.replace('T', ' '))}</td><td class="wrap">${e(o.reason)} <span class="mut">${e(o.station)}</span></td></tr>`).join('')}</table>` : '<p class="mut">Không có.</p>'}
-    </section>`;
-  }).join('') || '<p class="mut">Chưa có dữ liệu.</p>';
+<body>
+<evninfo-page></evninfo-page>
+<a class="st" href="status.html">Trạng thái · cập nhật</a>
+<script type="module">
+// Trang ingress của add-on: dùng lại giao diện "Điện EVN" (evn.js), đọc JSON của chính add-on (đường dẫn tương đối)
+await import('./evn.js');
+const Base = customElements.get('hp-evn-panel');
+class EvnInfoPage extends Base {
+  static ADDON = ['evninfo', 'EVN INFO']; static TITLE = 'Điện EVN'; static KEY = 'evninfo-';
+  async _ingress() { this._src = { slug: 'evninfo', label: 'EVN INFO' }; this._base = '.'; }
 }
-$('#rf').onclick = async () => { await fetch('refresh', { method: 'POST' }); $('#st').textContent = 'Đang cập nhật…'; setTimeout(load, 15000); };
-load(); setInterval(load, 60000);
+customElements.define('evninfo-page', EvnInfoPage);
+const el = document.querySelector('evninfo-page');
+const dark = () => { try { const t = localStorage.getItem('hp-theme'); if (t) return t !== 'light'; } catch (_) {} return matchMedia('(prefers-color-scheme: dark)').matches; };
+el.narrow = false; el.panel = {};
+el.hass = { themes: { darkMode: dark() } };
+document.body.classList.toggle('light', !dark());
 </script>
 </body></html>

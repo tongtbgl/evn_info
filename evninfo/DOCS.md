@@ -17,6 +17,9 @@ Lấy dữ liệu điện từ CSKH EVN miền Trung (cskh-api.cpc.vn) cho mọi
 `chi_so` (kWh, total_increasing – dùng được cho Energy), `ngay_gan_nhat`, `hom_qua`, `thang_nay`, `ky_nay`, `hoa_don` (VND), `tien_no` (VND), `cat_dien` (thuộc tính `schedule`), `cap_nhat`.
 Sensor được đẩy qua API (không phải integration) – sau khi HA khởi động lại sẽ có lại ở lần cập nhật kế tiếp.
 
+## Giao diện
+Cài và khởi động add-on là có mục **EVN** trên thanh bên (add-on tự bật "Hiện trên thanh bên" ở lần chạy đầu; tắt đi thì không bật lại). Trang chính: biểu đồ theo tháng, chi tiết kỳ, thống kê, so với năm trước, đổi mã khách hàng. Nút "Trạng thái · cập nhật": lần cập nhật, lỗi, cập nhật ngay, lịch cắt điện.
+
 ## Ingress (JSON)
 `summary.json`, `accounts.json`, `tien_dien_san_luong_<năm>_<mã KH>.json`, `dien_tieu_thu_<mã KH>.json` (cùng định dạng add-on EVN VN cũ), `POST refresh`.
 Chỉ nhận yêu cầu từ Supervisor (ingress).

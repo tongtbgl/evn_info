@@ -308,8 +308,10 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self._ok(): return
         p = urllib.parse.urlparse(self.path).path.lstrip('/')
-        if p in ('', 'index.html'):
-            return self._send(200, open(os.path.join(os.path.dirname(__file__), 'index.html'), 'rb').read(), 'text/html; charset=utf-8')
+        if p in ('', 'index.html', 'status.html', 'evn.js'):   # giao diện: index (biểu đồ, evn.js) + status (trạng thái, cập nhật ngay)
+            f = p if p else 'index.html'
+            return self._send(200, open(os.path.join(os.path.dirname(__file__), f), 'rb').read(),
+                              'text/javascript; charset=utf-8' if f.endswith('.js') else 'text/html; charset=utf-8')
         if p == 'accounts.json':
             with db() as c: return self._send(200, [dict(r) for r in c.execute('SELECT code, name, station_name FROM accounts ORDER BY code')])
         if p == 'summary.json': return self._send(200, summary())
@@ -328,6 +330,16 @@ class H(BaseHTTPRequestHandler):
         self._send(404, {'error': 'not found'})
 
 
+def sidebar_once():
+    """Lần đầu cài: tự bật "Hiện trên thanh bên" (mục EVN). Chỉ làm một lần – người dùng tắt đi thì không bật lại."""
+    if not SUP or meta('sidebar_set'): return
+    r = urllib.request.Request('http://supervisor/addons/self/options', data=json.dumps({'ingress_panel': True}).encode(), method='POST',
+                               headers={'Authorization': 'Bearer ' + SUP, 'Content-Type': 'application/json'})
+    try:
+        urllib.request.urlopen(r, timeout=15).read(); meta('sidebar_set', datetime.now().isoformat(timespec='seconds')); log('Đã bật mục EVN trên thanh bên')
+    except Exception as e: log('Không bật được mục thanh bên:', e)
+
+
 def loop():
     while True:
         run_once()
@@ -340,6 +352,7 @@ if __name__ == '__main__':
     if not OPTS.get('username') or not OPTS.get('password'):
         log('Chưa cấu hình username / password – vào tab Cấu hình của add-on.')
     init_db()
+    sidebar_once()
     try: import_old()
     except Exception as e: log('Nhập lịch sử cũ lỗi:', e)
     if OPTS.get('username') and OPTS.get('password'):
