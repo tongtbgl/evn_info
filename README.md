@@ -8,6 +8,21 @@ Viết lại bằng Python thuần (không thư viện ngoài) để thay add-on
 | EVN miền Trung (EVNCPC – cskh.cpc.vn) | Hoạt động |
 | EVN Hà Nội, EVN HCMC, EVN miền Bắc (NPC), EVN miền Nam (SPC) | Chưa hỗ trợ |
 
+## Tài khoản đăng nhập
+Add-on dùng **tài khoản CSKH EVN miền Trung** – chính là tài khoản đăng nhập trang `cskh.cpc.vn` hoặc app **CSKH EVNCPC**.
+
+- **Tên đăng nhập**: thường là **số điện thoại** đã đăng ký với điện lực, hoặc **mã khách hàng** (dạng `PCxxxxxxxxxxx`, in trên hóa đơn tiền điện).
+- **Mật khẩu**: mật khẩu của tài khoản đó.
+
+Kiểm tra trước khi cài:
+1. Đăng nhập thử trên trang `cskh.cpc.vn` (mục Đăng nhập) hoặc app CSKH EVNCPC bằng tài khoản trên.
+2. Trong tài khoản phải thấy **mã khách hàng** của nhà bạn (một tài khoản có thể gắn nhiều mã – add-on lấy tất cả).
+3. Xem được sản lượng / hóa đơn trên trang đó thì add-on cũng lấy được.
+
+Chưa có tài khoản hoặc quên mật khẩu: đăng ký / lấy lại mật khẩu ngay trên trang `cskh.cpc.vn` hoặc app CSKH EVNCPC (xác nhận qua số điện thoại đã đăng ký với điện lực), hoặc gọi tổng đài CSKH EVNCPC **1900 1909** để được cấp và gắn mã khách hàng vào tài khoản.
+
+Nhập đúng tên đăng nhập và mật khẩu này vào tab **Cấu hình** của add-on (`username`, `password`).
+
 ## Cài đặt
 1. Home Assistant → Cài đặt → Add-on → Cửa hàng add-on → ⋮ → Kho lưu trữ → thêm
    `https://github.com/tongtbgl/evn_info`
@@ -36,6 +51,5 @@ Viết lại bằng Python thuần (không thư viện ngoài) để thay add-on
 ## Ghi chú
 - Cổng CSKH EVNCPC có thể chặn IP ngoài Việt Nam.
 - Không phải sản phẩm của EVN. Dùng tài khoản của chính bạn.
-- Ghi công: cách đăng nhập EVNCPC dựa theo dự án mã mở nestup_evn (Apache-2.0).
 
 Giấy phép: MIT.
