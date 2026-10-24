@@ -26,9 +26,16 @@ Viết lại bằng Python thuần (không thư viện ngoài) để thay add-on
 ## JSON qua ingress
 `summary.json`, `accounts.json`, `tien_dien_san_luong_<năm>_<mã KH>.json`, `dien_tieu_thu_<mã KH>.json` (cùng định dạng add-on EVN VN cũ), `POST refresh`. Chỉ nhận yêu cầu từ Supervisor.
 
+## Cách hoạt động
+- Đăng nhập bằng chính tài khoản CSKH EVNCPC của bạn (giống đăng nhập trên trang cskh.cpc.vn / app CSKH EVNCPC), nhận mã truy cập và tự đăng nhập lại khi hết hạn. Mật khẩu chỉ nằm trong cấu hình add-on, không gửi đi đâu khác.
+- Mỗi chu kỳ (mặc định 3 giờ) add-on lấy cho từng mã khách hàng: sản lượng và chỉ số theo ngày, hóa đơn điện tử theo tháng, tiền nợ / tình trạng thanh toán, sản lượng hôm qua / tháng này, lịch cắt điện của trạm.
+- Cổng EVN chỉ trả khoảng 35 ngày sản lượng gần nhất, nên add-on lưu lại vào CSDL riêng (`/data/evninfo.db`) để có lịch sử dài. CSDL nằm trong bản sao lưu add-on của Home Assistant.
+- Lần chạy đầu lấy hóa đơn của `bill_years` năm gần nhất; các lần sau chỉ lấy lại 3 tháng gần nhất và tháng còn thiếu.
+- Lỗi đăng nhập / mạng hiện ở trang "Trạng thái · cập nhật" và trong nhật ký add-on.
+
 ## Ghi chú
 - Cổng CSKH EVNCPC có thể chặn IP ngoài Việt Nam.
 - Không phải sản phẩm của EVN. Dùng tài khoản của chính bạn.
-- Cách đăng nhập EVNCPC tham khảo integration [nestup_evn](https://github.com/trvqhuy/nestup_evn) (Apache-2.0).
+- Ghi công: cách đăng nhập EVNCPC dựa theo dự án mã mở nestup_evn (Apache-2.0).
 
 Giấy phép: MIT.
